@@ -1,0 +1,95 @@
+@Metadata.layer: #CORE
+
+@UI: {
+    headerInfo: {
+                   typeName        : 'Orders',
+                   typeNamePlural  : 'Sales Orders',
+                   title: { type: #STANDARD, value: 'Id' } },
+    presentationVariant: [{ sortOrder: [{ by:       'Id',
+                                             direction: #DESC }],
+                               visualizations: [{ type: #AS_LINEITEM }] }] }
+
+@Search.searchable: true
+annotate entity ZC_ORDERS_0631 with
+{
+  @UI.facet: [{ id        : 'Orders',
+              purpose   : #STANDARD,
+              type      : #IDENTIFICATION_REFERENCE,
+              label     : 'Sales Order Header',
+              position  : 10 },
+            { id            : 'Items',
+              purpose       : #STANDARD,
+              type          : #LINEITEM_REFERENCE,
+              label         : 'Sales Order Items',
+              position      : 20,
+              targetElement : '_Items'}]
+
+  @UI: {
+        lineItem        : [{ position: 10, label: 'Order ID', importance: #HIGH }],
+        identification  : [{ position: 10, label: 'Order ID' }],
+        selectionField: [{ position: 10 }] }
+
+  Id;
+
+  @UI: {
+        lineItem        : [{ position: 20, label: 'Email', importance: #HIGH }],
+        identification  : [{ position: 20, label: 'Email' }],
+        selectionField: [{ position: 20 }] }
+  Email;
+
+  @Search.defaultSearchElement: true
+  @UI: {
+        lineItem        : [{ position: 30, label: 'First Name', importance: #MEDIUM }],
+        identification  : [{ position: 30, label: 'First Name' }]}
+  Firstname;
+
+  @UI: {
+        lineItem        : [{ position: 40, label: 'Last Name', importance: #MEDIUM }],
+        identification  : [{ position: 40, label: 'Last Name' }]}
+  Lastname;
+
+  @UI: {
+        lineItem        : [{ position: 50, label: 'Country', importance: #LOW }],
+        identification  : [{ position: 50, label: 'Country' }],
+        selectionField: [{ position: 30 }] }
+  Country;
+
+  @UI: {
+        lineItem        : [{ position: 60, label: 'Create On', importance: #LOW }],
+        identification  : [{ position: 60, label: 'Create On' }]}
+  Createon;
+
+  @UI: {
+        lineItem        : [{ position: 70, label: 'Delivery Date', importance: #LOW }],
+        identification  : [{ position: 70, label: 'Delivery Date' }]}
+  Deliverydate;
+
+  @UI: {
+        lineItem        : [{ position: 80, label: 'Order Status', importance: #LOW }],
+        identification  : [{ position: 80, label: 'Order Status' }] }
+
+  Orderstatus;
+
+  @UI: {
+      lineItem        : [{ position: 90, label: 'Status', importance: #LOW }],
+      identification  : [{ position: 90, label: 'Status' }] }
+  Status;
+
+  @UI.hidden: true
+  Imageurl;
+  @UI.hidden: true
+  LocalCreatedBy;
+  @UI.hidden: true
+  LocalCreatedAt;
+  @UI.hidden: true
+  LocalLastChangedBy;
+  @UI.hidden: true
+  LocalLastChangedAt;
+  @UI.hidden: true
+  LastChangedAt;
+  /* Associations */
+  @UI.hidden: true
+  _Items;
+
+
+}

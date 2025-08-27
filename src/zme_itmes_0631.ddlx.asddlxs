@@ -1,0 +1,91 @@
+@Metadata.layer: #CORE
+
+@UI: {
+    headerInfo: {
+        typeName        : 'Item',
+        typeNamePlural  : 'Items',
+        title: { type: #STANDARD, value: 'Id' } } }
+
+@Search.searchable: true
+annotate entity ZC_ITEMS_0631 with
+{
+  @UI.facet: [{ id        : 'Items',
+               purpose   : #STANDARD,
+               type      : #IDENTIFICATION_REFERENCE,
+               label     : 'Item',
+               position  : 10 }]
+  @UI: {
+     lineItem        : [{ position: 10, label: 'ID', importance: #HIGH }],
+     identification  : [{ position: 10, label: 'ID' }]}
+  Id;
+
+  @UI.hidden: true
+  @UI.lineItem: [{ label: 'ID Order' }]
+  IdOrder;
+
+  @Search.defaultSearchElement: true
+  @UI: {
+      lineItem        : [{ position: 11, label: 'Name', importance: #HIGH }],
+      identification  : [{ position: 11, label: 'Name' }]}
+  Name;
+
+  @UI: {
+  lineItem        : [{ position: 20, label: 'Description', importance: #MEDIUM }],
+  identification  : [{ position: 20, label: 'Description' }]}
+  Description;
+
+  @UI: {
+  lineItem        : [{ position: 30, label: 'Release Date', importance: #MEDIUM }],
+  identification  : [{ position: 30, label: 'Release Date' }]}
+  Releasedate;
+
+  @UI: {
+  lineItem        : [{ position: 40, label: 'Discontinued Date', importance: #MEDIUM }],
+  identification  : [{ position: 40, label: 'Discontinued Date' }]}
+  Discontinueddate;
+
+  @UI: {
+  lineItem        : [{ position: 50, label: 'Price', importance: #MEDIUM }],
+  identification  : [{ position: 50, label: 'Price' }]}
+  Price;
+
+  @UI: {
+  lineItem        : [{ position: 60, label: 'Height', importance: #LOW }],
+  identification  : [{ position: 60, label: 'Height' }]}
+  Height;
+
+  @UI: {
+  lineItem        : [{ position: 70, importance: #LOW }],
+  identification  : [{ position: 70, label: 'Width' }]}
+  Width;
+
+  @UI: {
+  lineItem        : [{ position: 80, label: 'Width', importance: #LOW }],
+  identification  : [{ position: 80, label: 'Depth' }]}
+  Depth;
+
+  @UI: {
+  lineItem        : [{ position: 90, label: 'Quantity', importance: #LOW }],
+  identification  : [{ position: 90, label: 'Quantity' }]}
+  Quantity;
+
+  @UI: {
+  lineItem        : [{ position: 100, label: 'Unit Of Measure', importance: #LOW }],
+  identification  : [{ position: 100, label: 'Unit Of Measure' }]}
+  @UI.hidden: true
+  Unitofmeasure;
+  @UI.hidden: true
+  LocalCreatedBy;
+  @UI.hidden: true
+  LocalCreatedAt;
+  @UI.hidden: true
+  LocalLastChangedBy;
+  @UI.hidden: true
+  LocalLastChangedAt;
+  @UI.hidden: true
+  LastChangedAt;
+  /* Associations */
+  @UI.hidden: true
+  _Orders;
+
+}

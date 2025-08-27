@@ -1,0 +1,98 @@
+managed implementation in class zbp_r_orders_0631 unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZR_ORDERS_0631 alias Orders
+persistent table ztb_orders_0631
+draft table ztb_orders_d_631
+etag master LocalLastChangedAt
+lock master total etag LastChangedAt
+authorization master ( instance, global )
+
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  field ( mandatory ) Email;
+  field ( numbering : managed, readonly ) Id;
+
+
+  field ( readonly ) LocalCreatedBy,
+  LocalCreatedAt,
+  LocalLastChangedBy,
+  LocalLastChangedAt,
+  LastChangedAt;
+
+  validation validateFields on save { create; field Createon; }
+
+  determination setStatusToOpen on save { create; }
+
+  association _Items { create; with draft; }
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+
+  draft determine action Prepare
+  {
+    validation validateFields;
+  }
+
+  mapping for ztb_orders_0631
+    {
+      Id                 = id;
+      Email              = email;
+      Firstname          = firstname;
+      Lastname           = lastname;
+      Country            = country;
+      Createon           = createon;
+      Deliverydate       = deliverydate;
+      Orderstatus        = orderstatus;
+      Imageurl           = imageurl;
+      LocalCreatedBy     = local_created_by;
+      LocalCreatedAt     = local_created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+    }
+}
+
+define behavior for ZR_ITEMS_0631 alias Items
+persistent table ztb_items_0631
+draft table ztb_items_d_0631
+lock dependent by _Orders
+authorization dependent by _Orders
+etag master LocalLastChangedAt
+
+{
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) Id;
+  field ( readonly ) IdOrder;
+
+  association _Orders { with draft; }
+
+  mapping for ztb_items_0631
+    {
+      Id                 = id;
+      IdOrder            = id_order;
+      Name               = name;
+      Description        = description;
+      Releasedate        = releasedate;
+      Discontinueddate   = discontinueddate;
+      Price              = price;
+      Height             = height;
+      Width              = width;
+      Depth              = depth;
+      Quantity           = quantity;
+      Unitofmeasure      = unitofmeasure;
+      LocalCreatedBy     = local_created_by;
+      LocalCreatedAt     = local_created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+    }
+}

@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition Orders'
+define service Zsd_orders_0631 {
+  expose ZC_ORDERS_0631;
+  expose ZC_ITEMS_0631;
+}
