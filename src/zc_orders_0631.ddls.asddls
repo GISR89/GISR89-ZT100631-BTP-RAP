@@ -16,6 +16,7 @@ define root view entity ZC_ORDERS_0631
           Deliverydate,
           Orderstatus,
 
+// virtual element para mostrar Orderstatus en texto
           @EndUserText.label: 'Status'
           @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZCL_VIRTUAL_CODE_0631'
   virtual Status : abap.char(10),

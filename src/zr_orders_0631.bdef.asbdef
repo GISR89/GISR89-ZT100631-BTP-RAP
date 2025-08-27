@@ -14,7 +14,9 @@ authorization master ( instance, global )
   update;
   delete;
 
+ // Email como campo oblicatorio
   field ( mandatory ) Email;
+  //el ID será generado automáticamente por el framework, no puede ser modificado por el consumidor
   field ( numbering : managed, readonly ) Id;
 
 
@@ -24,9 +26,11 @@ authorization master ( instance, global )
   LocalLastChangedAt,
   LastChangedAt;
 
-  validation validateFields on save { create; field Createon; }
+//para validar que las fechas sean igual a hoy y que deliverydate sea mayor que Createon
+  validation validateFields on save { create; field Createon, Deliverydate; }
 
-  determination setStatusToOpen on save { create; }
+//Para que el campo Oderstatus sea Open al crear un registro
+  determination setStatusToOpen on modify { create; }
 
   association _Items { create; with draft; }
 
@@ -70,6 +74,7 @@ etag master LocalLastChangedAt
   update;
   delete;
 
+  //el ID será generado automáticamente por el framework, no puede ser modificado por el consumidor
   field ( numbering : managed, readonly ) Id;
   field ( readonly ) IdOrder;
 
