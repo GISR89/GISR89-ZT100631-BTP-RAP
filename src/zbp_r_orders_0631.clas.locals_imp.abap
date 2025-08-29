@@ -30,63 +30,62 @@ CLASS lhc_Orders IMPLEMENTATION.
 
   METHOD get_global_authorizations.
 
-  "CB9980002421
+    "CB9980002421
 
-    data(lv_technical_name) = cl_abap_context_info=>get_user_technical_name(  ).
+    DATA(lv_technical_name) = cl_abap_context_info=>get_user_technical_name(  ).
 
     "lv_technical_name = 'DIFFERENT'.
 
-    if requested_authorizations-%create eq if_abap_behv=>mk-on.
+    IF requested_authorizations-%create EQ if_abap_behv=>mk-on.
 
-      if lv_technical_name eq 'CB9980002421'.
+      IF lv_technical_name EQ 'CB9980002421'.
         result-%create = if_abap_behv=>auth-allowed.
-      else.
+      ELSE.
 
         result-%create = if_abap_behv=>auth-unauthorized.
 
-        append value #( %msg = new zcl_orders_messages_0631( textid      = /dmo/cm_flight_messages=>not_authorized
+        APPEND VALUE #( %msg = NEW zcl_orders_messages_0631( textid      = /dmo/cm_flight_messages=>not_authorized
                                                              severity    = if_abap_behv_message=>severity-error )
-                        %global = if_abap_behv=>mk-on ) to reported-orders.
+                        %global = if_abap_behv=>mk-on ) TO reported-orders.
 
-      endif.
+      ENDIF.
 
-    endif.
+    ENDIF.
 
-    if requested_authorizations-%update      eq if_abap_behv=>mk-on or
-       requested_authorizations-%action-Edit eq if_abap_behv=>mk-on.
+    IF requested_authorizations-%update      EQ if_abap_behv=>mk-on OR
+       requested_authorizations-%action-Edit EQ if_abap_behv=>mk-on.
 
 
-      if lv_technical_name eq 'CB9980002421'.
+      IF lv_technical_name EQ 'CB9980002421'.
         result-%update      = if_abap_behv=>auth-allowed.
         result-%action-Edit = if_abap_behv=>auth-allowed.
-      else.
+      ELSE.
 
         result-%update      = if_abap_behv=>auth-unauthorized.
         result-%action-Edit = if_abap_behv=>auth-unauthorized.
 
-        append value #( %msg = new zcl_orders_messages_0631( textid      = /dmo/cm_flight_messages=>not_authorized
+        APPEND VALUE #( %msg = NEW zcl_orders_messages_0631( textid      = /dmo/cm_flight_messages=>not_authorized
                                                              severity    = if_abap_behv_message=>severity-error )
-                        %global = if_abap_behv=>mk-on ) to reported-orders.
+                        %global = if_abap_behv=>mk-on ) TO reported-orders.
 
-      endif.
+      ENDIF.
 
-    endif.
+    ENDIF.
 
-    if requested_authorizations-%delete eq if_abap_behv=>mk-on.
+    IF requested_authorizations-%delete EQ if_abap_behv=>mk-on.
 
-      if lv_technical_name eq 'CB9980002421'.
+      IF lv_technical_name EQ 'CB9980002421'.
         result-%delete = if_abap_behv=>auth-allowed.
-      else.
+      ELSE.
 
         result-%delete = if_abap_behv=>auth-unauthorized.
 
-        append value #( %msg = new zcl_orders_messages_0631( textid      = /dmo/cm_flight_messages=>not_authorized
+        APPEND VALUE #( %msg = NEW zcl_orders_messages_0631( textid      = /dmo/cm_flight_messages=>not_authorized
                                                              severity    = if_abap_behv_message=>severity-error )
-                        %global = if_abap_behv=>mk-on ) to reported-orders.
+                        %global = if_abap_behv=>mk-on ) TO reported-orders.
 
-      endif.
-    endif.
-
+      ENDIF.
+    ENDIF.
 
   ENDMETHOD.
 
@@ -95,7 +94,8 @@ CLASS lhc_Orders IMPLEMENTATION.
     "lectura de la entidad
     READ ENTITIES OF zr_orders_0631 IN LOCAL MODE
     ENTITY Orders
-    FIELDS ( Orderstatus )
+    FIELDS ( Orderstatus
+             Createon )
     WITH CORRESPONDING #( keys )
     RESULT DATA(lt_orders).
 
@@ -106,9 +106,11 @@ CLASS lhc_Orders IMPLEMENTATION.
     MODIFY ENTITIES OF zr_orders_0631 IN LOCAL MODE
       ENTITY Orders
       UPDATE
-      FIELDS ( Orderstatus )
+      FIELDS ( Orderstatus
+               Createon )
       WITH VALUE #( FOR Orders IN lt_orders ( %tky = orders-%tky
-                                              Orderstatus = order_status-open   ) ).
+                                              Orderstatus = order_status-open
+                                              Createon = cl_abap_context_info=>get_system_date( ) ) ).
 
   ENDMETHOD.
 

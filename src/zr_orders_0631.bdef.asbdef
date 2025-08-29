@@ -19,8 +19,9 @@ authorization master ( instance, global )
   //el ID será generado automáticamente por el framework, no puede ser modificado por el consumidor
   field ( numbering : managed, readonly ) Id;
 
-
-  field ( readonly ) LocalCreatedBy,
+// Createon en modo lectura para que no se pueda editar.
+  field ( readonly ) Createon,
+  LocalCreatedBy,
   LocalCreatedAt,
   LocalLastChangedBy,
   LocalLastChangedAt,
